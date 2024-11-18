@@ -1,4 +1,4 @@
-package ru.yandex.practicum.sources.kafka;
+package ru.yandex.practicum.sources.kafka.handlers.hub;
 
 import ru.yandex.practicum.models.hub.HubEvent;
 import ru.yandex.practicum.models.hub.enums.HubEventType;

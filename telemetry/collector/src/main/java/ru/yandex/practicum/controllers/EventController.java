@@ -12,8 +12,8 @@ import ru.yandex.practicum.models.hub.HubEvent;
 import ru.yandex.practicum.models.hub.enums.HubEventType;
 import ru.yandex.practicum.models.sensor.SensorEvent;
 import ru.yandex.practicum.models.sensor.enums.SensorEventType;
-import ru.yandex.practicum.sources.kafka.HubEventHandler;
-import ru.yandex.practicum.sources.kafka.SensorEventHandler;
+import ru.yandex.practicum.sources.kafka.handlers.hub.HubEventHandler;
+import ru.yandex.practicum.sources.kafka.handlers.sensor.SensorEventHandler;
 
 import java.util.Map;
 import java.util.Set;

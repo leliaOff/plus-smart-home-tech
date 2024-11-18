@@ -1,9 +1,10 @@
-package ru.yandex.practicum.sources.kafka;
+package ru.yandex.practicum.sources.kafka.handlers.hub;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import ru.yandex.practicum.models.hub.HubEvent;
+import ru.yandex.practicum.sources.kafka.Config;
 
 @Slf4j
 @RequiredArgsConstructor
