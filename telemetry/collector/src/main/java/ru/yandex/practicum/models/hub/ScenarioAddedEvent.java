@@ -13,7 +13,8 @@ import java.util.List;
 @Setter
 @ToString
 public class ScenarioAddedEvent extends HubEvent {
-    @NotBlank @Size(min = 3, max = 2147483647)
+    @NotBlank
+    @Size(min = 3, max = 2147483647)
     private String name;
     @NotBlank
     private List<ScenarioCondition> conditions;
