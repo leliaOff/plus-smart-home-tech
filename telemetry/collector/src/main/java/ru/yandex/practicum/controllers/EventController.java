@@ -38,7 +38,7 @@ public class EventController {
     public void sensors(@Valid @RequestBody SensorEvent event) {
         SensorEventHandler handler = sensorEventHandlers.get(event.getType());
         if (handler == null) {
-            throw new SensorHandlerNotFound("Не не найдено событие сенсора: " + event.getType());
+            throw new SensorHandlerNotFound("Не найдено событие сенсора: " + event.getType());
         }
         handler.handle(event);
     }

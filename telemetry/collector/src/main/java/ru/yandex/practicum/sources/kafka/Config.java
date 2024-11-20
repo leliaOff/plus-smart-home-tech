@@ -22,7 +22,7 @@ import java.util.Properties;
 @Configuration
 @ConfigurationProperties("collector.kafka")
 public class Config {
-    public ProducerConfig producer;
+    private ProducerConfig producer;
 
     @Bean
     public KafkaProducer<String, SpecificRecordBase> kafkaProducer() {
@@ -72,8 +72,7 @@ public class Config {
         private final EnumMap<TopicType, String> topics;
 
         public <T extends SpecificRecordBase> void send(String topic, String key, T event) {
-            ProducerRecord<String, SpecificRecordBase> record =
-                    new ProducerRecord<>(topic, key, event);
+            ProducerRecord<String, SpecificRecordBase> record = new ProducerRecord<>(topic, key, event);
             kafkaProducer.send(record);
         }
     }

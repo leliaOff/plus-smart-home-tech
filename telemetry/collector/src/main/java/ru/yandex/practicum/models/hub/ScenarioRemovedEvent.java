@@ -12,7 +12,7 @@ import ru.yandex.practicum.models.hub.enums.HubEventType;
 @ToString
 public class ScenarioRemovedEvent extends HubEvent {
     @NotBlank
-    @Size(min = 3, max = 2147483647)
+    @Size(min = 3)
     private String name;
 
     public HubEventType getType() {
