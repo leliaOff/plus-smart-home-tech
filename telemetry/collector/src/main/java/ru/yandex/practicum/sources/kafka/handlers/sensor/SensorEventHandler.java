@@ -17,7 +17,7 @@ public abstract class SensorEventHandler<T extends SpecificRecordBase> implement
     @Override
     public void handle(SensorEvent event) {
         T avroEvent = mapToAvro(event);
-        String topic = topics.producer.getTopics().get(Config.TopicType.SENSORS_EVENTS);
+        String topic = topics.getProducer().getTopics().get(Config.TopicType.SENSORS_EVENTS);
         log.info("Событие датчика {}. Топик {}", getMessageType(), topic);
         producer.send(topic, event.getId(), avroEvent);
     }

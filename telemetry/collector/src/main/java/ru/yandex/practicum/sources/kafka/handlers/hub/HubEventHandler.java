@@ -17,7 +17,7 @@ public abstract class HubEventHandler<T extends SpecificRecordBase> implements H
     @Override
     public void handle(HubEvent event) {
         T avroEvent = mapToAvro(event);
-        String topic = topics.producer.getTopics().get(Config.TopicType.HUBS_EVENTS);
+        String topic = topics.getProducer().getTopics().get(Config.TopicType.HUBS_EVENTS);
         log.info("Событие хаба {}. Топик {}", getMessageType(), topic);
         producer.send(topic, event.getHubId(), avroEvent);
     }
