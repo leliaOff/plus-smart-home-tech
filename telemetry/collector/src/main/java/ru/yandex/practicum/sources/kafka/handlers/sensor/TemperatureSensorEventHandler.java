@@ -1,11 +1,12 @@
 package ru.yandex.practicum.sources.kafka.handlers.sensor;
 
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
+import ru.yandex.practicum.grpc.telemetry.event.TemperatureSensorEvent;
 import ru.yandex.practicum.kafka.telemetry.event.TemperatureSensorAvro;
-import ru.yandex.practicum.models.sensor.SensorEvent;
-import ru.yandex.practicum.models.sensor.TemperatureSensorEvent;
-import ru.yandex.practicum.models.sensor.enums.SensorEventType;
 import ru.yandex.practicum.sources.kafka.Config;
+
+import java.time.Instant;
 
 @Service
 public class TemperatureSensorEventHandler extends SensorEventHandler<TemperatureSensorAvro> {
@@ -14,17 +15,17 @@ public class TemperatureSensorEventHandler extends SensorEventHandler<Temperatur
     }
 
     @Override
-    public SensorEventType getMessageType() {
-        return SensorEventType.TEMPERATURE_SENSOR_EVENT;
+    public SensorEventProto.PayloadCase getMessageType() {
+        return SensorEventProto.PayloadCase.TEMPERATURE_SENSOR_EVENT;
     }
 
     @Override
-    protected TemperatureSensorAvro mapToAvro(SensorEvent event) {
-        var temperatureEvent = (TemperatureSensorEvent) event;
+    protected TemperatureSensorAvro mapToAvro(SensorEventProto event) {
+        TemperatureSensorEvent temperatureEvent = event.getTemperatureSensorEvent();
         return new TemperatureSensorAvro(
-                temperatureEvent.getId(),
-                temperatureEvent.getHubId(),
-                temperatureEvent.getTimestamp(),
+                event.getId(),
+                event.getHubId(),
+                Instant.ofEpochSecond(event.getTimestamp().getSeconds(), event.getTimestamp().getNanos()),
                 temperatureEvent.getTemperatureC(),
                 temperatureEvent.getTemperatureF()
         );

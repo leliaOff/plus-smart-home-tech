@@ -3,7 +3,7 @@ package ru.yandex.practicum.sources.kafka.handlers.sensor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
-import ru.yandex.practicum.models.sensor.SensorEvent;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.sources.kafka.Config;
 
 @Slf4j
@@ -12,13 +12,13 @@ public abstract class SensorEventHandler<T extends SpecificRecordBase> implement
     protected final Config.KafkaEventProducer producer;
     protected final Config topics;
 
-    protected abstract T mapToAvro(SensorEvent event);
+    protected abstract T mapToAvro(SensorEventProto event);
 
     @Override
-    public void handle(SensorEvent event) {
-        T avroEvent = mapToAvro(event);
+    public void handle(SensorEventProto event) {
+        T protoEvent = mapToAvro(event);
         String topic = topics.getProducer().getTopics().get(Config.TopicType.SENSORS_EVENTS);
         log.info("Событие датчика {}. Топик {}", getMessageType(), topic);
-        producer.send(topic, event.getId(), avroEvent);
+        producer.send(topic, event.getId(), protoEvent);
     }
 }
