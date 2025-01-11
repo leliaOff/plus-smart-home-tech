@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 @Table(name = "actions")
 public class Action {
     @Id
@@ -20,4 +21,12 @@ public class Action {
     private ActionType type;
 
     private Integer value;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "scenario_id", nullable = false)
+    @ToString.Exclude
+    private Scenario scenario;
+
+    @Column(name = "sensor_id", nullable = false)
+    private String sensorId;
 }
