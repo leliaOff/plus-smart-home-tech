@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.springframework.kafka.annotation.KafkaListener;
+import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.configuration.Config;
 import ru.yandex.practicum.kafka.telemetry.event.*;
@@ -13,17 +13,19 @@ import ru.yandex.practicum.service.SensorService;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Component
 public class HubEventProcessor implements Runnable {
     private final KafkaConsumer<String, HubEventAvro> consumer;
-    private final Config config;
     private final SensorService sensorService;
     private final ScenarioService scenarioService;
+    private final List<String> topics = Collections.singletonList("telemetry.hubs.v1");
+
+    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
 
     public HubEventProcessor(Config config, SensorService sensorService, ScenarioService scenarioService) {
-        this.config = config;
         this.sensorService = sensorService;
         this.scenarioService = scenarioService;
         this.consumer = new KafkaConsumer<>(config.getHubConsumerProperties());
@@ -31,11 +33,12 @@ public class HubEventProcessor implements Runnable {
 
     @Override
     public void run() {
-        try (consumer) {
+        try {
             Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
-            consumer.subscribe(Collections.singletonList("telemetry.hubs.v1"));
-            while (!Thread.currentThread().isInterrupted()) {
-                ConsumerRecords<String, HubEventAvro> records = consumer.poll(Duration.ofMillis(1000));
+            consumer.subscribe(topics);
+            log.info("Слушаем топик с устройствами хаба");
+            while (true) {
+                ConsumerRecords<String, HubEventAvro> records = consumer.poll(CONSUMER_TIMEOUT);
                 for (ConsumerRecord<String, HubEventAvro> record : records) {
                     try {
                         processing(record);
@@ -43,13 +46,26 @@ public class HubEventProcessor implements Runnable {
                         log.error("При обработке сообщения произошла ошибка: {}", record, e);
                     }
                 }
+                try {
+                    consumer.commitSync();
+                } catch (Exception e) {
+                    log.error("Ошибка фиксации", e);
+                }
             }
+        } catch (WakeupException ignored) {
+            log.info("Остановка потребителя");
         } catch (Exception e) {
-            log.error("Ошибка kafka consumer", e);
+            log.error("Ошибка во время обработки получения устройств хаба", e);
+        } finally {
+            try {
+                consumer.commitAsync();
+            } finally {
+                log.info("Закрываем консьюмер");
+                consumer.close();
+            }
         }
     }
 
-    @KafkaListener(topics = "telemetry.hubs.v1", groupId = "analyzer-hub-group")
     public void processing(ConsumerRecord<String, HubEventAvro> record) {
         HubEventAvro hubEventAvro = record.value();
         if (hubEventAvro.getPayload() instanceof DeviceAddedEventAvro event) {

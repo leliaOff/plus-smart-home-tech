@@ -16,7 +16,11 @@ import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
@@ -25,57 +29,43 @@ public class AggregationStarter {
 
     private final KafkaProducer<String, SensorsSnapshotAvro> producer;
     private final KafkaConsumer<String, SensorEventAvro> consumer;
-    private final Map<String, SensorsSnapshotAvro> snapshots = new HashMap<>();
+    private final ConcurrentHashMap<String, SensorsSnapshotAvro> snapshots = new ConcurrentHashMap<>();
     private final EnumMap<Config.TopicType, String> topics;
 
+    private String telemetrySensors;
+    private String telemetrySnapshots;
+
+    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
+
     public void start() {
-        final String telemetrySensors = topics.get(Config.TopicType.TELEMETRY_SENSORS);
-        final String telemetrySnapshots = topics.get(Config.TopicType.TELEMETRY_SNAPSHOTS);
+        if (!setTelemetrySensors() || !setTelemetrySnapshots()) {
+            return;
+        }
         try {
             consumer.subscribe(Collections.singletonList(telemetrySensors));
             log.info("Слушаем: {}", telemetrySensors);
-
             while (true) {
-                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(Duration.ofMillis(100));
+                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(CONSUMER_TIMEOUT);
                 if (records.isEmpty()) {
                     continue;
                 }
-
                 for (ConsumerRecord<String, SensorEventAvro> record : records) {
-                    SensorEventAvro event = record.value();
-
-                    updateState(event).ifPresent(snapshot -> {
-                        try {
-                            producer.send(
-                                    new ProducerRecord<>(telemetrySnapshots, snapshot.getHubId(), snapshot),
-                                    (metadata, exception) -> {
-                                    });
-                            log.info("Зафиксирован снапшоп {}", snapshot.getHubId());
-                        } catch (Exception e) {
-                            log.error("Ошибка при отправке снапшота в топик", e);
-                        }
-                    });
+                    processing(record.value());
                 }
-
                 try {
                     consumer.commitSync();
                 } catch (Exception e) {
-                    log.error("commitSync error ", e);
+                    log.error("Ошибка фиксации", e);
                 }
             }
-
         } catch (WakeupException ignored) {
-            log.error("Ошибка WakeupException");
+            log.info("Остановка потребителя");
         } catch (Exception e) {
             log.error("Ошибка во время обработки событий от датчиков", e);
         } finally {
-
             try {
-                // Перед тем, как закрыть продюсер и консьюмер, нужно убедится,
-                // что все сообщения, лежащие в буффере, отправлены и
-                // все оффсеты обработанных сообщений зафиксированы
                 producer.flush();
-                consumer.commitSync();
+                consumer.commitAsync();
             } finally {
                 log.info("Закрываем консьюмер");
                 consumer.close();
@@ -85,11 +75,43 @@ public class AggregationStarter {
         }
     }
 
-    public Optional<SensorsSnapshotAvro> updateState(SensorEventAvro event) {
+    private boolean setTelemetrySensors() {
+        telemetrySensors = topics.get(Config.TopicType.TELEMETRY_SENSORS);
+        if (telemetrySensors == null) {
+            log.error("Не удалось получить топик для прослушивания датчиков");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean setTelemetrySnapshots() {
+        telemetrySnapshots = topics.get(Config.TopicType.TELEMETRY_SNAPSHOTS);
+        if (telemetrySnapshots == null) {
+            log.error("Не удалось получить топик для фиксации снапшотов");
+            return false;
+        }
+        return true;
+    }
+
+    private void processing(SensorEventAvro event) {
+        updateState(event).ifPresent(snapshot -> {
+            try {
+                producer.send(
+                        new ProducerRecord<>(telemetrySnapshots, snapshot.getHubId(), snapshot),
+                        (metadata, exception) -> {
+                        });
+                log.info("Зафиксирован снапшоп {}", snapshot.getHubId());
+            } catch (Exception e) {
+                log.error("Ошибка при отправке снапшота в топик", e);
+            }
+        });
+    }
+
+    private Optional<SensorsSnapshotAvro> updateState(SensorEventAvro event) {
         SensorsSnapshotAvro snapshot = snapshots.getOrDefault(event.getHubId(),
                 SensorsSnapshotAvro.newBuilder()
                         .setHubId(event.getHubId())
-                        .setTimestamp(Instant.ofEpochSecond(System.currentTimeMillis()))
+                        .setTimestamp(Instant.now())
                         .setSensorsState(new HashMap<>())
                         .build());
 

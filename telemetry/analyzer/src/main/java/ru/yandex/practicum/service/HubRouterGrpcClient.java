@@ -11,12 +11,14 @@ import ru.yandex.practicum.grpc.telemetry.hubrouter.HubRouterControllerGrpc;
 public class HubRouterGrpcClient {
     private final HubRouterControllerGrpc.HubRouterControllerBlockingStub client;
 
-    public HubRouterGrpcClient(@GrpcClient("hub-router")
-                               HubRouterControllerGrpc.HubRouterControllerBlockingStub hubRouterClient) {
+    public HubRouterGrpcClient(@GrpcClient("hub-router") HubRouterControllerGrpc.HubRouterControllerBlockingStub hubRouterClient) {
         this.client = hubRouterClient;
     }
 
     public void send(DeviceActionRequest deviceActionRequest) {
-        client.handleDeviceAction(deviceActionRequest);
+        var result = client.handleDeviceAction(deviceActionRequest);
+        if (result == null) {
+            log.error("Не удалось отправить сообщение устройству");
+        }
     }
 }
