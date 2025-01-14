@@ -1,10 +1,9 @@
 package ru.yandex.practicum.sources.kafka.handlers.sensor;
 
-import ru.yandex.practicum.models.sensor.SensorEvent;
-import ru.yandex.practicum.models.sensor.enums.SensorEventType;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 
 public interface SensorEventHandlerInterface {
-    SensorEventType getMessageType();
+    SensorEventProto.PayloadCase getMessageType();
 
-    void handle(SensorEvent event);
+    void handle(SensorEventProto event);
 }
