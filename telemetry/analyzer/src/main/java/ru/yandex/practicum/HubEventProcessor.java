@@ -18,12 +18,11 @@ import java.util.List;
 @Slf4j
 @Component
 public class HubEventProcessor implements Runnable {
+    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
     private final KafkaConsumer<String, HubEventAvro> consumer;
     private final SensorService sensorService;
     private final ScenarioService scenarioService;
     private final List<String> topics = Collections.singletonList("telemetry.hubs.v1");
-
-    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
 
     public HubEventProcessor(Config config, SensorService sensorService, ScenarioService scenarioService) {
         this.sensorService = sensorService;

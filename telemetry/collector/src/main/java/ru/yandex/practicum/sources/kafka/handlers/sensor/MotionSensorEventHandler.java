@@ -1,11 +1,10 @@
 package ru.yandex.practicum.sources.kafka.handlers.sensor;
 
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.grpc.telemetry.event.MotionSensorEvent;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.MotionSensorAvro;
 import ru.yandex.practicum.sources.kafka.Config;
-import ru.yandex.practicum.grpc.telemetry.event.ClimateSensorEvent;
-import ru.yandex.practicum.grpc.telemetry.event.MotionSensorEvent;
 
 @Service
 public class MotionSensorEventHandler extends SensorEventHandler<MotionSensorAvro> {

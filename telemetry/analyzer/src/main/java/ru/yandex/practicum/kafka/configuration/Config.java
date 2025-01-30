@@ -17,9 +17,9 @@ import java.util.Properties;
 @Component
 @ConfigurationProperties("aggregator.kafka")
 public class Config {
+    public ProducerConfig producer;
+    public ConsumerConfig consumer;
     private Properties hubConsumerProperties;
     private Properties snapshotConsumerProperties;
     private Map<String, String> topics;
-    public ProducerConfig producer;
-    public ConsumerConfig consumer;
 }
