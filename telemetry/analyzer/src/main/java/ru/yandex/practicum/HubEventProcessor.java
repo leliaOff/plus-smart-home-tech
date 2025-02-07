@@ -8,8 +8,8 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.configuration.Config;
 import ru.yandex.practicum.kafka.telemetry.event.*;
-import ru.yandex.practicum.service.ScenarioService;
-import ru.yandex.practicum.service.SensorService;
+import ru.yandex.practicum.services.ScenarioService;
+import ru.yandex.practicum.services.SensorService;
 
 import java.time.Duration;
 import java.util.Collections;

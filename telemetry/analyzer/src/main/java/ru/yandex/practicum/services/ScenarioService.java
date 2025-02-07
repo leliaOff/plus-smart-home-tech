@@ -1,10 +1,10 @@
-package ru.yandex.practicum.service;
+package ru.yandex.practicum.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioAddedEventAvro;
-import ru.yandex.practicum.model.*;
-import ru.yandex.practicum.repository.ScenarioRepository;
+import ru.yandex.practicum.models.*;
+import ru.yandex.practicum.repositories.ScenarioRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

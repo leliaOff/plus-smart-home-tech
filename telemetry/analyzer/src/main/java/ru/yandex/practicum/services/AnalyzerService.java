@@ -1,4 +1,4 @@
-package ru.yandex.practicum.service;
+package ru.yandex.practicum.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,10 +7,10 @@ import ru.yandex.practicum.grpc.telemetry.event.ActionTypeProto;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionProto;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionRequest;
 import ru.yandex.practicum.kafka.telemetry.event.*;
-import ru.yandex.practicum.model.Action;
-import ru.yandex.practicum.model.Condition;
-import ru.yandex.practicum.model.ConditionOperation;
-import ru.yandex.practicum.model.Scenario;
+import ru.yandex.practicum.models.Action;
+import ru.yandex.practicum.models.Condition;
+import ru.yandex.practicum.models.ConditionOperation;
+import ru.yandex.practicum.models.Scenario;
 
 import java.util.List;
 

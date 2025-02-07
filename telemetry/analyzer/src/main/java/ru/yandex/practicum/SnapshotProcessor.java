@@ -9,7 +9,7 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.configuration.Config;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
-import ru.yandex.practicum.service.AnalyzerService;
+import ru.yandex.practicum.services.AnalyzerService;
 
 import java.time.Duration;
 import java.util.Collections;
