@@ -6,8 +6,9 @@ import enums.QuantityState;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
 import java.math.BigDecimal;
+import java.util.UUID;
+
 @Getter
 @Setter
 @Entity

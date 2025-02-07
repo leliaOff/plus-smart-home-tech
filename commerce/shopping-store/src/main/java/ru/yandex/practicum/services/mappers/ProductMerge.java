@@ -1,16 +1,12 @@
 package ru.yandex.practicum.services.mappers;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
 import ru.yandex.practicum.dto.ProductDto;
 import ru.yandex.practicum.models.Product;
 
 import java.math.BigDecimal;
 
 public class ProductMerge {
-    public static Product mergeProductDto(Product product, ProductDto productDto)
-    {
+    public static Product mergeProductDto(Product product, ProductDto productDto) {
         if (productDto.getProductName() != null) {
             product.setProductName(productDto.getProductName());
         }
