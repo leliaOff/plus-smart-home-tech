@@ -12,6 +12,5 @@ import ru.yandex.practicum.requests.NewProductInWarehouseRequest;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 public interface WarehouseMapper {
-    @Mapping(target = "quantityAvailable", constant = "0")
     WarehouseProduct toWarehouseProduct(NewProductInWarehouseRequest request);
 }
