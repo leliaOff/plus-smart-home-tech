@@ -2,7 +2,6 @@ package ru.yandex.practicum.services.mappers;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import ru.yandex.practicum.models.WarehouseProduct;
 import ru.yandex.practicum.requests.NewProductInWarehouseRequest;
