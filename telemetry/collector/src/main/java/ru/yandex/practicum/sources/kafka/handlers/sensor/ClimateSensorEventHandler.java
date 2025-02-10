@@ -1,10 +1,10 @@
 package ru.yandex.practicum.sources.kafka.handlers.sensor;
 
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;
-import ru.yandex.practicum.sources.kafka.Config;
 import ru.yandex.practicum.grpc.telemetry.event.ClimateSensorEvent;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
+import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;
+import ru.yandex.practicum.sources.kafka.Config;
 
 @Service
 public class ClimateSensorEventHandler extends SensorEventHandler<ClimateSensorAvro> {

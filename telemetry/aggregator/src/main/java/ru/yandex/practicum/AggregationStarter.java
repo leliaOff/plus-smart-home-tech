@@ -27,15 +27,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class AggregationStarter {
 
+    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
     private final KafkaProducer<String, SensorsSnapshotAvro> producer;
     private final KafkaConsumer<String, SensorEventAvro> consumer;
     private final ConcurrentHashMap<String, SensorsSnapshotAvro> snapshots = new ConcurrentHashMap<>();
     private final EnumMap<Config.TopicType, String> topics;
-
     private String telemetrySensors;
     private String telemetrySnapshots;
-
-    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
 
     public void start() {
         if (!setTelemetrySensors() || !setTelemetrySnapshots()) {
