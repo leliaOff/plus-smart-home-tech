@@ -30,7 +30,7 @@ public class ShoppingCartService {
         log.info("Получить корзину для авторизованного пользователя или создать новую: {}", username);
         validator.validateUsername(username);
 
-        ShoppingCart shoppingCart = repository.findByUsername(username, true)
+        ShoppingCart shoppingCart = repository.findByUsername(username)
                 .orElseGet(() -> create(username));
         return mapper.toShoppingCartDto(shoppingCart);
     }

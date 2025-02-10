@@ -1,10 +1,10 @@
 package ru.yandex.practicum.models;
 
+import jakarta.persistence.*;
+import lombok.*;
 import ru.yandex.practicum.enums.ProductCategory;
 import ru.yandex.practicum.enums.ProductState;
 import ru.yandex.practicum.enums.QuantityState;
-import jakarta.persistence.*;
-import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;

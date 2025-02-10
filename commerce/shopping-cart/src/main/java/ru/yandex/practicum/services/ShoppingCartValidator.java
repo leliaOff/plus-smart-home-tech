@@ -9,6 +9,7 @@ import ru.yandex.practicum.exceptions.ProductNotAvailableException;
 public class ShoppingCartValidator {
     private static final int LIMITED_COUNT = 5;
     private static final int ENOUGH_COUNT = 20;
+
     public void validateUsername(String username) {
         if (username == null || username.isEmpty()) {
             throw new NotAuthorizedUserException("Не указано имя пользователя");

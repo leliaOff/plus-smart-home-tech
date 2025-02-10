@@ -1,8 +1,8 @@
 package ru.yandex.practicum.requests;
 
-import ru.yandex.practicum.enums.QuantityState;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import ru.yandex.practicum.enums.QuantityState;
 
 import java.util.UUID;
 

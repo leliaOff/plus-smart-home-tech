@@ -1,6 +1,5 @@
 package ru.yandex.practicum.services;
 
-import ru.yandex.practicum.enums.ProductCategory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.dto.PageableDto;
 import ru.yandex.practicum.dto.ProductDto;
+import ru.yandex.practicum.enums.ProductCategory;
 import ru.yandex.practicum.exceptions.ProductNotFoundException;
 import ru.yandex.practicum.models.Product;
 import ru.yandex.practicum.repositories.ProductRepository;

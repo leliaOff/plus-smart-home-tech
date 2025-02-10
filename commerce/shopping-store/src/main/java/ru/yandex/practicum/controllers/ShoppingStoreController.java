@@ -1,11 +1,11 @@
 package ru.yandex.practicum.controllers;
 
-import ru.yandex.practicum.enums.ProductCategory;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.PageableDto;
 import ru.yandex.practicum.dto.ProductDto;
+import ru.yandex.practicum.enums.ProductCategory;
 import ru.yandex.practicum.requests.SetProductQuantityStateRequest;
 import ru.yandex.practicum.services.ShoppingStoreService;
 
