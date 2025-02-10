@@ -1,8 +1,8 @@
 package ru.yandex.practicum.dto;
 
-import enums.ProductCategory;
-import enums.ProductState;
-import enums.QuantityState;
+import ru.yandex.practicum.enums.ProductCategory;
+import ru.yandex.practicum.enums.ProductState;
+import ru.yandex.practicum.enums.QuantityState;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

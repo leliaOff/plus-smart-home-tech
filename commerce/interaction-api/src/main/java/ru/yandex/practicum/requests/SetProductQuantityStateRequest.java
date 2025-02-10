@@ -1,6 +1,6 @@
 package ru.yandex.practicum.requests;
 
-import enums.QuantityState;
+import ru.yandex.practicum.enums.QuantityState;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 

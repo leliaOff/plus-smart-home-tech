@@ -1,6 +1,6 @@
 package ru.yandex.practicum.services;
 
-import enums.ProductCategory;
+import ru.yandex.practicum.enums.ProductCategory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

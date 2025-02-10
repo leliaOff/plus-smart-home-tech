@@ -1,6 +1,6 @@
 package ru.yandex.practicum.controllers;
 
-import enums.ProductCategory;
+import ru.yandex.practicum.enums.ProductCategory;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
