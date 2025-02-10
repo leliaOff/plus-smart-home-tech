@@ -40,8 +40,8 @@ public class ShoppingStoreService {
         log.info("Получить сведения по товару из БД: {}", productId);
         Product product = repository.findById(productId)
                 .orElseThrow(() -> {
-                    log.error("Продукт не найден: {}", productId);
-                    return new ProductNotFoundException("Продукт не найден");
+                    log.error("Товар не найден: {}", productId);
+                    return new ProductNotFoundException("Товар не найден");
                 });
         return mapper.toProductDto(product);
     }
@@ -59,7 +59,7 @@ public class ShoppingStoreService {
         UUID productId = productDto.getProductId();
         log.info("Обновление товара в ассортименте: {}", productId);
         Product product = repository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Продукт не найден"));
+                .orElseThrow(() -> new ProductNotFoundException("Товар не найден"));
         Product updatedProduct = repository.save(ProductMerge.mergeProductDto(product, productDto));
         return mapper.toProductDto(updatedProduct);
     }
@@ -69,8 +69,8 @@ public class ShoppingStoreService {
         log.info("Удалить товар из ассортимента магазина: {}", productId);
         Product product = repository.findById(productId)
                 .orElseThrow(() -> {
-                    log.error("Продукт не найден: {}", productId);
-                    return new ProductNotFoundException("Продукт не найден");
+                    log.error("Товар не найден: {}", productId);
+                    return new ProductNotFoundException("Товар не найден");
                 });
         repository.delete(product);
         return true;
@@ -82,8 +82,8 @@ public class ShoppingStoreService {
         log.info("Установка статуса по товару: {}, статус: {}", productId, request.getQuantityState());
         Product product = repository.findById(productId)
                 .orElseThrow(() -> {
-                    log.error("Продукт не найден: {}", productId);
-                    return new ProductNotFoundException("Продукт не найден");
+                    log.error("Товар не найден: {}", productId);
+                    return new ProductNotFoundException("Товар не найден");
                 });
         product.setQuantityState(request.getQuantityState());
         repository.save(product);

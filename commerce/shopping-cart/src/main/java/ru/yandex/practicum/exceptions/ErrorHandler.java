@@ -26,7 +26,7 @@ public class ErrorHandler {
     @ExceptionHandler(ProductNotAvailableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleProductNotAvailableException(ProductNotAvailableException ex) {
-        return errorResponse(HttpStatus.BAD_REQUEST, "Данный продукт не доступен", ex);
+        return errorResponse(HttpStatus.BAD_REQUEST, "Данный товар не доступен", ex);
     }
 
     @ExceptionHandler(CartNotFoundException.class)

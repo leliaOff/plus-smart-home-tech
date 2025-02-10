@@ -7,7 +7,6 @@ import jakarta.ws.rs.InternalServerErrorException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.exceptions.ProductNotFoundException;
 
 @Slf4j
 @Component
@@ -21,7 +20,6 @@ public class CustomErrorDecoder implements ErrorDecoder {
         log.error("FEIGN: method {}, status {}, cause {}", methodKey, response.status(), response.reason());
         assert httpStatus != null;
         return switch (httpStatus) {
-            case NOT_FOUND -> new ProductNotFoundException("Товар не найден");
             case BAD_REQUEST -> new BadRequestException("Bad Request");
             case INTERNAL_SERVER_ERROR -> new InternalServerErrorException("Internal Server Error");
             default -> defaultErrorDecoder.decode(methodKey, response);

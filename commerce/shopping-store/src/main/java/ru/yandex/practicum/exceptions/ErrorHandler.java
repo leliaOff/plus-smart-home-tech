@@ -14,7 +14,7 @@ public class ErrorHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleProductNotFoundException(Throwable ex) {
-        return errorResponse(HttpStatus.NOT_FOUND, "Продукт не найден", ex);
+        return errorResponse(HttpStatus.NOT_FOUND, "Товар не найден", ex);
     }
 
     @ExceptionHandler(InternalServerErrorException.class)
