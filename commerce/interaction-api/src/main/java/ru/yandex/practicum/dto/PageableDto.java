@@ -14,11 +14,11 @@ import java.util.List;
 public class PageableDto {
     @NotNull(message = "необходимо указать страницу")
     @Min(value = 0, message = "минимальное значение страницы - 0")
-    private int page;
+    private Integer page;
 
     @NotNull(message = "необходимо указать указать размер списка")
     @Min(value = 1, message = "минимальное значение размера списка - 1")
-    private int size;
+    private Integer size;
 
     private List<String> sort;
 }

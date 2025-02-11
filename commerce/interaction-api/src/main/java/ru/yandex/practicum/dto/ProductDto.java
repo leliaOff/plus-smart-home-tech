@@ -35,7 +35,7 @@ public class ProductDto {
 
     @DecimalMin(value = "1.0", message = "минимальное значение - 1")
     @DecimalMax(value = "5.0", message = "максимальное значение - 5")
-    private double rating;
+    private Double rating;
 
     @NotNull(message = "необходимо указать категорию")
     private ProductCategory productCategory;

@@ -17,11 +17,11 @@ public class NewProductInWarehouseRequest {
     private UUID productId;
 
     @NotNull(message = "необходимо указать признак хрупкого товара")
-    private boolean fragile;
+    private Boolean fragile;
 
     @NotNull(message = "необходимо указать габариты товара")
     private DimensionDto dimension;
 
     @DecimalMin(value = "1.0", message = "минимальное значение веса - 1")
-    private double weight;
+    private Double weight;
 }
