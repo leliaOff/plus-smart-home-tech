@@ -22,7 +22,7 @@ public class ProductMerge {
         if (productDto.getProductState() != null) {
             product.setProductState(productDto.getProductState());
         }
-        if (productDto.getRating() > 0) {
+        if (productDto.getRating() != null) {
             product.setRating(productDto.getRating());
         }
         if (productDto.getProductCategory() != null) {
