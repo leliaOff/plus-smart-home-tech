@@ -9,7 +9,7 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.configuration.Config;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
-import ru.yandex.practicum.service.AnalyzerService;
+import ru.yandex.practicum.services.AnalyzerService;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -19,10 +19,10 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class SnapshotProcessor implements Runnable {
+    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
     private final KafkaConsumer<String, SensorsSnapshotAvro> consumer;
     private final AnalyzerService service;
     private final List<String> topics = Collections.singletonList("telemetry.snapshots.v1");
-    private static final Duration CONSUMER_TIMEOUT = Duration.ofMillis(1000);
 
     public SnapshotProcessor(Config config, AnalyzerService service) {
         this.service = service;

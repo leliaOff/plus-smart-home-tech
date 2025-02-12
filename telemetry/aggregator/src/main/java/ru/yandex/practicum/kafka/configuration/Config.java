@@ -26,6 +26,21 @@ public class Config {
     public ConsumerConfig consumer;
     private Map<String, String> topics;
 
+    @Bean
+    public KafkaProducer<String, SpecificRecordBase> kafkaProducer() {
+        return new KafkaProducer<>(producer.properties);
+    }
+
+    @Bean
+    public KafkaConsumer<String, SpecificRecordBase> kafkaConsumer() {
+        return new KafkaConsumer<>(consumer.properties);
+    }
+
+    @Bean
+    public EnumMap<TopicType, String> topics() {
+        return new Topics(topics).getTopics();
+    }
+
     public enum TopicType {
         TELEMETRY_SENSORS, TELEMETRY_SNAPSHOTS;
 
@@ -69,22 +84,6 @@ public class Config {
                 this.topics.put(TopicType.from(entry.getKey()), entry.getValue());
             }
         }
-    }
-
-
-    @Bean
-    public KafkaProducer<String, SpecificRecordBase> kafkaProducer() {
-        return new KafkaProducer<>(producer.properties);
-    }
-
-    @Bean
-    public KafkaConsumer<String, SpecificRecordBase> kafkaConsumer() {
-        return new KafkaConsumer<>(consumer.properties);
-    }
-
-    @Bean
-    public EnumMap<TopicType, String> topics() {
-        return new Topics(topics).getTopics();
     }
 
     @Component
