@@ -38,7 +38,7 @@ public class Product {
     private ProductState productState;
 
     @Column(nullable = false)
-    private double rating;
+    private BigDecimal rating;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

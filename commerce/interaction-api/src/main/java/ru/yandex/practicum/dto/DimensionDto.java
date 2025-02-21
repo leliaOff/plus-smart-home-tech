@@ -9,12 +9,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DimensionDto {
-    @DecimalMin(value = "1.0", message = "must be greater 0.")
-    private double width;
+    @DecimalMin(value = "1.0", message = "минимально допустимое значение - 1")
+    private Double width;
 
-    @DecimalMin(value = "1.0", message = "must be greater 0.")
-    private double height;
+    @DecimalMin(value = "1.0", message = "минимально допустимое значение - 1")
+    private Double height;
 
-    @DecimalMin(value = "1.0", message = "must be greater 0.")
-    private double depth;
+    @DecimalMin(value = "1.0", message = "минимально допустимое значение - 1")
+    private Double depth;
 }

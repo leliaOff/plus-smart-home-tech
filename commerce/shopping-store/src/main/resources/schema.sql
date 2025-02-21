@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS products
     product_state    VARCHAR(50)      NOT NULL,
     rating           DOUBLE PRECISION NOT NULL,
     product_category VARCHAR(50)      NOT NULL,
-    price            NUMERIC(19, 2)   NOT NULL
+    price            NUMERIC(19, 2)   NOT NULL CHECK (price >= 1)
 );

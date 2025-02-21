@@ -80,13 +80,7 @@ public class ShoppingStoreService {
     public Boolean quantityState(SetProductQuantityStateRequest request) {
         UUID productId = request.getProductId();
         log.info("Установка статуса по товару: {}, статус: {}", productId, request.getQuantityState());
-        Product product = repository.findById(productId)
-                .orElseThrow(() -> {
-                    log.error("Товар не найден: {}", productId);
-                    return new ProductNotFoundException("Товар не найден");
-                });
-        product.setQuantityState(request.getQuantityState());
-        repository.save(product);
-        return true;
+        int updated = repository.updateQuantityState(productId, request.getQuantityState());
+        return updated > 0;
     }
 }

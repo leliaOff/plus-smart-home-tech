@@ -16,5 +16,5 @@ public interface ShoppingStoreClient {
     ProductDto getProduct(@PathVariable("productId") UUID productId);
 
     @PostMapping("/quantityState")
-    boolean setProductQuantityState(@RequestBody SetProductQuantityStateRequest request);
+    Boolean setProductQuantityState(@RequestBody SetProductQuantityStateRequest request);
 }
