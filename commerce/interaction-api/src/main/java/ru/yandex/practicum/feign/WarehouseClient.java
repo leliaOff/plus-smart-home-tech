@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.dto.AddressDto;
 import ru.yandex.practicum.dto.BookedProductsDto;
 import ru.yandex.practicum.requests.AssemblyProductsRequest;
+import ru.yandex.practicum.requests.ShippedToDeliveryRequest;
 
 @FeignClient(name = "warehouse-service", path = "/api/v1/warehouse")
 public interface WarehouseClient {
@@ -16,4 +17,7 @@ public interface WarehouseClient {
 
     @GetMapping("/address")
     AddressDto address();
+
+    @PostMapping("shipped")
+    void shipped(@RequestBody ShippedToDeliveryRequest request);
 }
