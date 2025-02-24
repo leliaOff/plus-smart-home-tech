@@ -6,6 +6,7 @@ CREATE TABLE addresses (
     house       VARCHAR(5)      NOT NULL,
     flat        VARCHAR(5)
 );
+create index addresses_address_id_index on addresses (address_id);
 
 CREATE TABLE deliveries (
     delivery_id     UUID PRIMARY KEY,
@@ -19,3 +20,7 @@ CREATE TABLE deliveries (
     FOREIGN KEY (from_address_id) REFERENCES addresses (address_id),
     FOREIGN KEY (to_address_id) REFERENCES addresses (address_id)
 );
+create index deliveries_delivery_id_index on deliveries (delivery_id);
+create index deliveries_from_address_id_index on deliveries (from_address_id);
+create index deliveries_to_address_id_index on deliveries (to_address_id);
+create index deliveries_order_id_index on deliveries (order_id);

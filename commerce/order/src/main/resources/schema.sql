@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS addresses (
    house VARCHAR(255) NOT NULL,
    flat VARCHAR(255)
 );
+create index addresses_address_id_index on addresses (address_id);
 
 CREATE TABLE IF NOT EXISTS orders (
     order_id UUID PRIMARY KEY,
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (from_address_id) REFERENCES addresses(address_id),
     FOREIGN KEY (to_address_id) REFERENCES addresses(address_id)
 );
+create index orders_order_id_index on orders (order_id);
 
 CREATE TABLE IF NOT EXISTS order_products (
     order_id UUID NOT NULL,
@@ -32,3 +34,5 @@ CREATE TABLE IF NOT EXISTS order_products (
     PRIMARY KEY (order_id, product_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+create index order_products_order_id_index on order_products (order_id);
+create index order_products_product_id_index on order_products (product_id);

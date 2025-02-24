@@ -1,14 +1,7 @@
 package ru.yandex.practicum.services;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 
-@Slf4j
-@Service
-@RequiredArgsConstructor
 public class DeliveryCostService {
     public static BigDecimal getCost(String address, BigDecimal BASE_RATE) {
         final String ADDRESS_1 = "ADDRESS_1";
